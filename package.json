@@ -1,0 +1,16 @@
+{
+  "name": "gpio-web-console",
+  "version": "1.0.0",
+  "description": "Command your Raspberry GPIO from a web console",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Hirle",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-json": "^1.0.0",
+    "onoff": "^3.2.2"
+  }
+}

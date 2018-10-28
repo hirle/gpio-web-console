@@ -1,0 +1,14 @@
+[Unit]
+Description=gpio-web-console
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/opt/gpio-web-console
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=gpio-web-console
+
+[Install]
+WantedBy=multi-user.target
