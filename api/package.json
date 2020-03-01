@@ -4,7 +4,9 @@
   "description": "Command your Raspberry GPIO from a web console",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "jest",
+    "coverage": "npm run test -- --coverage"
   },
   "author": "Hirle",
   "license": "ISC",
@@ -12,5 +14,8 @@
     "express": "^4.16.4",
     "express-json": "^1.0.0",
     "onoff": "^3.2.9"
+  },
+  "devDependencies": {
+    "jest": "25.1.0"
   }
 }

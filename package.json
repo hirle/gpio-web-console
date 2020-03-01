@@ -1,0 +1,24 @@
+{
+    "name": "gpio-web-console",
+    "version": "2.0.0",
+    "scripts": {
+        "postinstall": "run-p install:*",
+        "install:api": "npm install --prefix api",
+        "install:web": "npm install --prefix web",
+        "build": "run-p build:*",
+        "build:api": "npm run build --prefix api",
+        "build:web": "npm run build --prefix web",
+        "coverage": "run-p coverage:*",
+        "coverage:api": "npm run coverage --prefix api",
+        "coverage:web": "npm run coverage --prefix web",
+        "test": "run-p test:*",
+        "test:api": "npm run test --prefix api",
+        "test:web": "npm run test --prefix web",
+        "predist": "mkdir -p dist/static",
+        "dist": "run-s build copy-to-dist",
+        "copy-to-dist": "cp -r api/build/* dist && cp -r web/build/* dist/static && cp api/package.json dist && cp api/config.template.json dist"
+    },
+    "devDependencies": {
+        "npm-run-all": "^4.0.2"
+    }
+}
