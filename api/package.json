@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "GPIO Web Console - API",
   "version": "2.0.0",
   "description": "Command your Raspberry GPIO from a web console",
   "main": "index.js",
