@@ -9,6 +9,10 @@ Register the gpio-web-console.service, this file may require adaptation for your
 
 ## Running
 
+** API is about good to run **
+** web is still under development **
+
+
 ### Prepare a config file
 
 This file named `config.json` must look like
