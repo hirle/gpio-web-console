@@ -4,17 +4,25 @@ export enum State {
     Off
 }
 
+export enum Mode {
+    PULSE = 'PULSE',
+    TWOSTATES = 'TWOSTATES',
+    NOTWIRED = 'NOTWIRED' 
+}
+
 export default class GPIO {
 
     readonly pin: number;
-    readonly id: number;
+    readonly id: string;
     readonly name: string;
+    readonly mode: Mode;
     state: State;
 
-    constructor(pin: number, id: number, name: string) {
+    constructor(pin: number, id: string, name: string, mode:string) {
         this.pin = pin;
         this.id = id;
         this.name = name;
+        this.mode = (Mode as any)[mode];
         this.state = State.NotInitialized;
     }
 
@@ -23,7 +31,7 @@ export default class GPIO {
     }
 
     static  deserialize(fromJson :any): GPIO {
-        const returned = new GPIO(fromJson.pin, fromJson.id, fromJson.name);
+        const returned = new GPIO(fromJson.pin, fromJson.id, fromJson.name, fromJson.mode);
         returned.state = fromJson.state ? State.On : State.Off;
         return returned;
     }

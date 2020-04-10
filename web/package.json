@@ -1,20 +1,23 @@
 {
   "name": "web",
   "version": "2.0.0",
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "5.5.0",
     "@testing-library/react": "10.0.2",
     "@testing-library/user-event": "10.0.1",
     "@types/color": "^3.0.1",
     "@types/jest": "25.2.1",
-    "@types/node": "13.11.1",
+    "@types/node": "13.13.4",
     "@types/react": "16.9.34",
-    "@types/react-dom": "16.9.6",
+    "@types/react-dom": "16.9.7",
+    "@types/socket.io-client": "^1.4.32",
+    "antd": "4.2.0",
     "color": "^3.1.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1",
+    "socket.io-client": "^2.3.0",
     "typescript": "3.8.3"
   },
   "scripts": {
@@ -26,6 +29,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": ".",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,10 +1,12 @@
 {
     "name": "gpio-web-console",
+    "description": "Command your Raspberry GPIO from a web application",
     "version": "2.0.0",
+    "license": "MIT",
     "scripts": {
         "postinstall": "run-p install:*",
-        "install:api": "npm install --prefix api",
-        "install:web": "npm install --prefix web",
+        "install:api": "npx yarn  --cwd api install",
+        "install:web": "npx yarn  --cwd web install",
         "build": "run-p build:*",
         "build:api": "npm run build --prefix api",
         "build:web": "npm run build --prefix web",
@@ -16,7 +18,7 @@
         "test:web": "npm run test --prefix web",
         "predist": "mkdir -p dist/static",
         "dist": "run-s build copy-to-dist",
-        "copy-to-dist": "cp -r api/build/* dist && cp -r web/build/* dist/static && cp api/package.json dist && cp api/config.template.json dist"
+        "copy-to-dist": "cp -r api/built/* dist && cp -r web/build/* dist/static && cp api/package.json dist && cp api/config.template.json dist"
     },
     "devDependencies": {
         "npm-run-all": "^4.0.2"

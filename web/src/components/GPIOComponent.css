@@ -1,6 +1,7 @@
 .gpio-component {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 10px;
@@ -10,17 +11,18 @@
 }
 
 .gpio-desc {
+    flex: 1;
     line-height: 40px;
+}
+
+.gpio-button {
+    width: 80px;
+    text-align: center;
 }
 
 .gpio-state {
     height:100%;
-    width:80px;
-}
-
-.gpio-state > svg {
-    height: 100%;
-    width: 100%;
+    width:60px;
 }
 
 .gpio-pin {

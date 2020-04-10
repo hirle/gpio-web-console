@@ -1,6 +1,10 @@
+@import '~antd/dist/antd.css';
+
+
 .App {
   background-color: #282c34;
   color: white;
+  height: 100vh;
 }
 
 .App-logo {
@@ -8,13 +12,17 @@
   margin-left: 12px;
   margin-right: 22px;
   vertical-align:middle;
-
 }
 
 .App-header {
   height: 25vh;
   padding-top:12px;
   padding-bottom:12px;
+
+}
+
+.App-header > h1 {
+  color: white;
 }
 
 .GPIOList {
@@ -24,10 +32,6 @@
   align-items: stretch;
   padding-left: 20px;
   padding-right: 20px;
-
+  max-width:600px;
+  margin: auto;
 }
-
-.App-footer {
-  height: auto;
-}
-

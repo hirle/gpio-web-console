@@ -1,7 +1,9 @@
 import React from 'react';
+import socketIo from 'socket.io-client';
 import logo from './logo.svg';
 import GPIO from './model/GPIO';
 import GPIOComponent from './components/GPIOComponent';
+import Api from './Api';
 import './App.css';
 
 enum Status {
@@ -14,20 +16,26 @@ class App extends React.Component<{}, { status: Status, gpios: GPIO[] }>{
 
   constructor(props: Readonly<{}>) {
     super(props);
-
     this.state = { status: Status.Loading, gpios: [] }
   }
 
   componentDidMount() {
-    fetch('/api/gpio')
-      .then(response => response.json())
-      .then(data => data.map((elt: any) => GPIO.deserialize(elt)))
-      .then((newGpios: GPIO[]) => {
-        this.setState({ status: Status.Running, gpios: newGpios });
+    Api.GetAllGpios()
+      .then( gpio => {
+        this.setState({ status: Status.Running, gpios: gpio });
+          this.setupIO();
       })
       .catch(error => {
         this.setState({ status: Status.Error });
       });
+  }
+
+  setupIO() {
+    const socket = socketIo();
+    socket.on('update', (data: any) => {
+      const newGpios = Api.processInputData(data);
+      this.setState({ status: Status.Running, gpios: newGpios })
+    });
   }
 
   renderRunning() {
@@ -42,8 +50,6 @@ class App extends React.Component<{}, { status: Status, gpios: GPIO[] }>{
         <section className="GPIOList">
           {this.state.gpios.map(gpio => <GPIOComponent key={gpio.id} gpio={gpio} />)}
         </section>
-        <footer  className="App-header">
-        </footer>
       </div>
     );
   }
