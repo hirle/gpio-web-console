@@ -1,0 +1,28 @@
+.gpio-component {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    height: 40px;
+}
+
+.gpio-desc {
+    line-height: 40px;
+}
+
+.gpio-state {
+    height:100%;
+    width:80px;
+}
+
+.gpio-state > svg {
+    height: 100%;
+    width: 100%;
+}
+
+.gpio-pin {
+   color: gray
+}
