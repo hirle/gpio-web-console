@@ -14,7 +14,7 @@ Register the gpio-web-console.service, this file may require adaptation for your
 ## Running
 
 ** API is about good to run **
-** web is still under development **
+** web is still under development, it only displays the status **
 
 
 ### Prepare a config file
@@ -27,11 +27,11 @@ This file named `config.json` must look like
   	{
   		"pin": 21,
   		"id": "freebox",
-	 		"name": "Freebox"
+	 	"name": "Freebox"
   	},
   	{
   		"pin": 26,
-	 		"name": "(not used)"
+	 	"name": "(not used)"
   	},
   ]
 }
@@ -56,14 +56,14 @@ Response:
 		{
   		"pin": 21,
   		"id": "freebox",
-	 		"name": "Freebox",
-	 		"state": true
+	 	"name": "Freebox",
+	 	"state": true
   	},
   	{
   		"pin": 26,
   		"id": null,
-	 		"name": "(not used)",
-	 		"state": false
+	 	"name": "(not used)",
+	 	"state": false
   	}
 ]
 ```
