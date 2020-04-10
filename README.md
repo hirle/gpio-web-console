@@ -72,7 +72,7 @@ Response:
 ### Change state
 
 Request:
-`PUT /api/gpio?id=freebox&on=true`
+`PUT /api/gpio?id=freebox&state=true`
 
 Response:
 `OK`

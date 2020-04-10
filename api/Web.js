@@ -26,9 +26,12 @@ module.exports = class Web {
     })
 
     this.app.put('/api/gpio', (req, res, next) => {
+
+      req.query.includes[]
+
       const id = req.query.id
       const newState = ['on', 'up', 'true', '1'].includes(
-        req.query.on.toLowerCase()
+        req.query.state.toLowerCase()
       )
 
       this.controller
