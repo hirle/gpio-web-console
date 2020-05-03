@@ -22,19 +22,34 @@ Register the gpio-web-console.service, this file may require adaptation for your
 This file named `config.json` must look like
 ```javascript
 {
-  "port": 3040,
-  "gpio": [
-  	{
-  		"pin": 21,
-  		"id": "freebox",
-	 	"name": "Freebox"
-  	},
-  	{
-  		"pin": 26,
-	 	"name": "(not used)"
-  	},
-  ]
-}
+    "port": 3040,
+    "gpio": [
+      {
+        "pin": 21,
+        "id": "freebox",
+        "name": "Freebox",
+        "mode": "PULSE"
+      },
+      {
+        "pin": 20,
+        "id": "tm",
+        "name": "Time Machine",
+        "mode": "TWOSTATES"
+      },
+      {
+        "pin": 26,
+         "id": "cour",
+        "name": "Caméra cour",
+        "mode": "TWOSTATES"
+      },
+      {
+        "pin": 16,
+         "id": "notused",
+        "name": "(Not used)",
+        "mode": "NOTWIRED"
+      }
+    ]
+  }
 ```
 
 ### Run
@@ -57,13 +72,21 @@ Response:
   		"pin": 21,
   		"id": "freebox",
 	 	"name": "Freebox",
-	 	"state": true
+		 "state": true,
+        "mode": "PULSE"
   	},
+	{
+		"pin": 20,
+		"id": "tm",
+		"name": "Time Machine",
+		"mode": "TWOSTATES"
+	},
   	{
   		"pin": 26,
-  		"id": null,
+  		"id": "notwired",
 	 	"name": "(not used)",
-	 	"state": false
+		"state": false,
+        "mode": "NOTWIRED"
   	}
 ]
 ```
@@ -74,5 +97,10 @@ Response:
 Request:
 `PUT /api/gpio?id=freebox&state=true`
 
-Response:
-`OK`
+
+### Pulse
+
+During 1 second, the state is on, then it comes back to off.
+
+Request:
+`PUT /api/gpio/freebox/pulse`
