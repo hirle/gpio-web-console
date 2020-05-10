@@ -1,21 +1,17 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hirle_gpio-web-console&metric=alert_status)](https://sonarcloud.io/dashboard?id=hirle_gpio-web-console)[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=hirle_gpio-web-console&metric=coverage)](https://sonarcloud.io/dashboard?id=hirle_gpio-web-console)
 
 
-
 # GPIO web console
 
-Ease the control gpio pins through a simple web application
+Ease the control gpio pins through a web application
 
 ## Installation
 
-Create a nologin user gpio-web-console
-Register the gpio-web-console.service, this file may require adaptation for your host
+Create a nologin user gpio-web-console.
+Register the gpio-web-console.service, this file may require adaptation for your host.
+Give capabilities to gpio-web-console read and write onto `/sys/class/gpio/export`.
 
 ## Running
-
-** API is about good to run **
-** web is still under development, it only displays the status **
-
 
 ### Prepare a config file
 
@@ -55,7 +51,7 @@ This file named `config.json` must look like
 ### Run
 
 `npm install`
-`npm start`
+`npm start -- (path to)/config.json`
 
 ## API
 
@@ -69,24 +65,25 @@ Response:
 ```javascript
 [
 		{
-  		"pin": 21,
-  		"id": "freebox",
-	 	"name": "Freebox",
-		 "state": true,
-        "mode": "PULSE"
+      "pin": 21,
+      "id": "freebox",
+      "name": "Freebox",
+      "state": true,
+      "mode": "PULSE"
   	},
-	{
-		"pin": 20,
-		"id": "tm",
-		"name": "Time Machine",
-		"mode": "TWOSTATES"
-	},
+    {
+      "pin": 20,
+      "id": "tm",
+      "name": "Time Machine",
+      "state": false,
+      "mode": "TWOSTATES"
+    },
   	{
-  		"pin": 26,
-  		"id": "notwired",
-	 	"name": "(not used)",
-		"state": false,
-        "mode": "NOTWIRED"
+      "pin": 26,
+      "id": "notwired",
+      "name": "(not used)",
+      "state": false,
+      "mode": "NOTWIRED"
   	}
 ]
 ```
@@ -100,7 +97,7 @@ Request:
 
 ### Pulse
 
-During 1 second, the state is on, then it comes back to off.
+Will switch during 1 second, then switch back off
 
 Request:
 `PUT /api/gpio/freebox/pulse`
