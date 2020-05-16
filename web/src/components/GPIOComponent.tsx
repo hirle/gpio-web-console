@@ -94,7 +94,7 @@ class GPIOButton extends React.Component<GPIOProps, { status: GPIOButtonStatus }
 const GPIOComponent: FunctionComponent<GPIOProps> = ({ gpio }) =>
     <article className="gpio-component">
         <div className="gpio-desc">
-            {gpio.name}<span className="gpio-id">&nbsp;ID</span>
+            {gpio.name}<span className="gpio-id">&nbsp;</span>
             <span className="gpio-pin">&nbsp;#{gpio.pin}</span>
         </div>
         <div className="gpio-button">

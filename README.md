@@ -5,6 +5,8 @@
 
 Ease the control gpio pins through a web application
 
+![Screenshot](demo/screenshot.png)
+
 ## Installation
 
 Create a nologin user gpio-web-console.
