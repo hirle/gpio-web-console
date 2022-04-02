@@ -3,22 +3,18 @@
   "version": "2.1.0",
   "license": "MIT",
   "dependencies": {
-    "@testing-library/jest-dom": "5.5.0",
-    "@testing-library/react": "10.0.2",
-    "@testing-library/user-event": "10.0.1",
-    "@types/color": "^3.0.1",
-    "@types/jest": "25.2.1",
-    "@types/node": "13.13.4",
-    "@types/react": "16.9.34",
-    "@types/react-dom": "16.9.7",
-    "@types/socket.io-client": "^1.4.32",
-    "antd": "4.2.0",
-    "color": "^3.1.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-scripts": "3.4.1",
-    "socket.io-client": "^2.3.0",
-    "typescript": "3.8.3"
+    "@testing-library/jest-dom": "5.16.3",
+    "@testing-library/react": "13.0.0",
+    "@testing-library/user-event": "14.0.4",
+    "@types/color": "^3.0.3",
+    "@types/node": "^16.0.0",
+    "antd": "4.19.5",
+    "color": "^4.2.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scripts": "4.0.3",
+    "socket.io-client": "^4.4.1",
+    "typescript": "4.5.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,5 +38,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://raspberrypi.local:3040"
+  "proxy": "http://raspberrypi.local:3040",
+  "devDependencies": {
+    "@types/react": "^17.0.43"
+  }
 }

@@ -1,7 +1,7 @@
 import express from 'express';
 import expressJson from 'express-json';
-import { Server } from 'http';
-import socketIO from 'socket.io';
+import { Server as HttpServer } from 'http';
+import { Server as IoServer } from 'socket.io';
 import Controller from './Controller';
 import Config from './Config';
 
@@ -10,15 +10,15 @@ export default class Web {
   config: Config;
   app: express.Application;
   controller: Controller;
-  server: Server;
-  io: socketIO.Server;
+  httpServer: HttpServer;
+  ioServer: IoServer;
 
 
   constructor(config: Config) {
     this.app = express()
     this.config = config;
-    this.server = new Server(this.app)
-    this.io = socketIO(this.server);
+    this.httpServer = new HttpServer(this.app)
+    this.ioServer = new IoServer(this.httpServer);
     this.controller = null
   }
 
@@ -38,8 +38,8 @@ export default class Web {
 
     this.setupBonjourAdverstisment()
 
-    this.server.listen(this.config.port, () => {
-      console.log('Listening on %s', this.server.address().toString())
+    this.httpServer.listen(this.config.port, () => {
+      console.log('Listening on %s', this.httpServer.address().toString())
     });
 
     this.setSocketIO();
@@ -87,14 +87,14 @@ export default class Web {
   }
 
   emitUpdate() {
-    this.io.emit('update', this.controller.getAllGpio());
+    this.ioServer.emit('update', this.controller.getAllGpio());
     return Promise.resolve();
   }
 
   setupBonjourAdverstisment() { }
 
   setSocketIO() {
-    this.io.on('connection', socket => {
+    this.ioServer.on('connection', socket => {
       socket.send(this.controller.getAllGpio());
     });
   }

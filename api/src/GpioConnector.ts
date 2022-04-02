@@ -6,14 +6,39 @@ import { Gpio } from 'onoff';
 const UP = 0
 const DOWN = 1
 
+class Pin {
+
+  readonly id: string;
+  readonly pin: number;
+  readonly name: string;
+  readonly state: number;
+  readonly mode: string;
+  readonly gpio: Gpio;
+
+  constructor( id: string, pin: number, name: string, state: number, mode: string, gpio: Gpio ) {
+    this.id = id;
+    this.pin = pin;
+    this.name = name;
+    this.state = state;
+    this.mode = mode;
+    this.gpio = gpio;   
+  }
+} 
+
 export default class GpioConnector {
 
-  pins: Gpio[];
+  pins: Pin[];
 
   constructor (config) {
-    this.pins = config.gpio.map(gpio =>
-      Object.assign({ gpio: new Gpio(gpio.pin, 'out') }, gpio)
-    )
+    this.pins = config.gpio.map(configPin => new Pin(
+      configPin.id,
+      configPin.pin,
+      configPin.name,
+      configPin.state,
+      configPin.mode,
+      new Gpio(configPin.pin, 'out')
+      )
+    );
   }
 
   setAllDown() {
