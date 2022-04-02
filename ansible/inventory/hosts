@@ -1,0 +1,2 @@
+[gpio.web.console]
+relais.local ansible_user=pi
