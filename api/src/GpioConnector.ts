@@ -36,7 +36,7 @@ export default class GpioConnector {
       configPin.name,
       configPin.state,
       configPin.mode,
-      new Gpio(configPin.pin, 'out')
+      new Gpio(configPin.pin.toString(), 'out')
       )
     );
   }
