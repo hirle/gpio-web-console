@@ -29,7 +29,6 @@
       notify:
         - Restart gpio-web-console
     
-
     - name: create directory for gpio-web-console
       ansible.builtin.file:
         path: /opt/gpio-web-console

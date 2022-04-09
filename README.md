@@ -9,9 +9,11 @@ Ease the control gpio pins through a web application
 
 ## Installation
 
-Create a nologin user gpio-web-console.
-Register the gpio-web-console.service, this file may require adaptation for your host.
-Give capabilities to gpio-web-console read and write onto `/sys/class/gpio/export`.
+A ansible playbook is available, see the directory ansible. This is will download the latest release from GitHub and make it run as a service. To proceed:
+
+- adapt the `inventory/hosts` file
+- adapt the `installs/files/config.json` file
+- run `ansible-playbook installs/mail-in-memory.yml`
 
 ## Running
 
