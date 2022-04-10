@@ -2,8 +2,6 @@
 - name: Install gpio-web-console
   hosts: gpio.web.console
   become: yes
-  roles:
-    - node16
 
   tasks:
     - name: create gpio-web-console group
@@ -16,9 +14,36 @@
         name: gpio-web-console
         groups: gpio-web-console
         shell: /sbin/nologin
+        home: /opt/gpio-web-console
         append: yes
         state: present
         create_home: no
+    
+    - name: create directory for gpio-web-console
+      ansible.builtin.file:
+        path: /opt/gpio-web-console
+        owner: gpio-web-console
+        group: gpio-web-console
+        state: directory
+        mode: '0755'
+
+    - name: Install NVM
+      shell: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh'
+      become: true
+      become_user: gpio-web-console
+      args:
+        executable: /bin/bash
+        chdir: /opt/gpio-web-console
+        creates: /opt/gpio-web-console/.nvm/nvm.sh
+
+    - name: Install Node.js
+      shell: '. /opt/gpio-web-console/.nvm/nvm.sh && nvm install 16.14.2'
+      become: true
+      become_user: gpio-web-console
+      args:
+        creates: "/opt/gpio-web-console/.nvm/versions/node"
+        chdir: /opt/gpio-web-console
+        executable: /bin/bash
 
     - name: Copy systemd service file to server
       copy:
@@ -28,14 +53,6 @@
         group: root
       notify:
         - Restart gpio-web-console
-    
-    - name: create directory for gpio-web-console
-      ansible.builtin.file:
-        path: /opt/gpio-web-console
-        owner: gpio-web-console
-        group: gpio-web-console
-        state: directory
-        mode: '0755'
 
     - name: query latest release from GitHub
       ansible.builtin.uri:                                                               

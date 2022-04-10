@@ -3,7 +3,7 @@ Description=gpio-web-console
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/npm start -- config.json
+ExecStart=/opt/gpio-web-console/.nvm/versions/node/v16.14.2/bin/npm start -- config.json
 WorkingDirectory=/opt/gpio-web-console
 StandardOutput=inherit
 StandardError=inherit
