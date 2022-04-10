@@ -9,17 +9,11 @@ Ease the control gpio pins through a web application
 
 ## Installation
 
-A ansible playbook is available, see the directory ansible. This is will download the latest release from GitHub and make it run as a service. To proceed:
-
-- adapt the `inventory/hosts` file
-- adapt the `installs/files/config.json` file
-- run `ansible-playbook installs/mail-in-memory.yml`
-
-## Running
+A ansible playbook is available, see the directory ansible.
 
 ### Prepare a config file
 
-This file named `config.json` must look like
+At `installs/files/config.json` adapt your config file:
 ```javascript
 {
     "port": 3040,
@@ -52,7 +46,13 @@ This file named `config.json` must look like
   }
 ```
 
-### Run
+### Install
+
+With you `installs/files/config.json` 
+- adapt the `inventory/hosts` file
+- run `ansible-playbook installs/gpio-web-console.yml`
+
+## Running manually
 
 `npm install`
 `npm start -- (path to)/config.json`
