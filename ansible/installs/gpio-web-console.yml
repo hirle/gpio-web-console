@@ -1,0 +1,111 @@
+---
+- name: Install gpio-web-console
+  hosts: gpio.web.console
+  become: yes
+
+  tasks:
+    - name: create gpio-web-console group
+      group:
+        name: gpio-web-console
+        state: present
+
+    - name: create gpio-web-console user
+      user:
+        name: gpio-web-console
+        groups: gpio-web-console
+        shell: /sbin/nologin
+        home: /opt/gpio-web-console
+        append: yes
+        state: present
+        create_home: no
+    
+    - name: create directory for gpio-web-console
+      ansible.builtin.file:
+        path: /opt/gpio-web-console
+        owner: gpio-web-console
+        group: gpio-web-console
+        state: directory
+        mode: '0755'
+
+    - name: Install NVM
+      shell: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh'
+      become: true
+      become_user: gpio-web-console
+      args:
+        executable: /bin/bash
+        chdir: /opt/gpio-web-console
+        creates: /opt/gpio-web-console/.nvm/nvm.sh
+
+    - name: Install Node.js
+      shell: '. /opt/gpio-web-console/.nvm/nvm.sh && nvm install 16.14.2'
+      become: true
+      become_user: gpio-web-console
+      args:
+        creates: "/opt/gpio-web-console/.nvm/versions/node"
+        chdir: /opt/gpio-web-console
+        executable: /bin/bash
+
+    - name: Copy systemd service file to server
+      copy:
+        src: gpio-web-console.service
+        dest: /etc/systemd/system
+        owner: root
+        group: root
+      notify:
+        - Restart gpio-web-console
+
+    - name: query latest release from GitHub
+      ansible.builtin.uri:                                                               
+        url: https://api.github.com/repos/hirle/gpio-web-console/releases/latest
+        return_content: true                                             
+      register: json_reponse          
+
+    - name: download release from GitHub    
+      get_url:                                                           
+        url: "{{ json_reponse.json.assets[0].browser_download_url }}"                       
+        dest: /tmp/gpio-web-console-latest.tar.gz       
+
+    - name: unpack release
+      unarchive:                       
+        remote_src: yes                                    
+        src: /tmp/gpio-web-console-latest.tar.gz
+        dest: /opt/gpio-web-console
+        owner: gpio-web-console
+        group: gpio-web-console
+
+    - name: install node dependencies
+      npm:
+        path: /opt/gpio-web-console
+        unsafe_perm: true
+
+    - name: declare service gpio-web-console
+      copy:
+        src: gpio-web-console.service
+        dest: /etc/systemd/system
+        owner: root
+        group: root
+      notify:
+        - Restart gpio-web-console
+
+    - name: Enable service gpio-web-console
+      ansible.builtin.service:
+        name: gpio-web-console
+        enabled: yes
+      notify:
+        - Restart gpio-web-console
+
+    - name: Copy config file  
+      copy:
+        src: config.json
+        dest: /opt/gpio-web-console
+        owner: gpio-web-console
+        group: gpio-web-console
+        mode: '0644'
+      notify:
+        - Restart gpio-web-console
+
+  handlers:
+    - name: Restart gpio-web-console
+      service:
+        name: gpio-web-console
+        state: restarted

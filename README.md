@@ -3,21 +3,17 @@
 
 # GPIO web console
 
-Ease the control gpio pins through a web application
+Take the control gpio pins through a web application and/or an API
 
 ![Screenshot](demo/screenshot.png)
 
 ## Installation
 
-Create a nologin user gpio-web-console.
-Register the gpio-web-console.service, this file may require adaptation for your host.
-Give capabilities to gpio-web-console read and write onto `/sys/class/gpio/export`.
-
-## Running
+A ansible playbook is available, see the directory ansible.
 
 ### Prepare a config file
 
-This file named `config.json` must look like
+At `installs/files/config.json` adapt your config file:
 ```javascript
 {
     "port": 3040,
@@ -50,7 +46,13 @@ This file named `config.json` must look like
   }
 ```
 
-### Run
+### Adapt
+
+With your config file `installs/files/config.json` 
+- adapt the `inventory/hosts` file
+- run `ansible-playbook installs/gpio-web-console.yml`
+
+## Running manually
 
 `npm install`
 `npm start -- (path to)/config.json`
