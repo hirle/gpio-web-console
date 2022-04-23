@@ -3,6 +3,9 @@
   hosts: gpio.web.console
   become: yes
 
+  vars:
+    node_version: 16.14.2
+
   tasks:
     - name: create gpio-web-console group
       group:
@@ -37,13 +40,19 @@
         creates: /opt/gpio-web-console/.nvm/nvm.sh
 
     - name: Install Node.js
-      shell: '. /opt/gpio-web-console/.nvm/nvm.sh && nvm install 16.14.2'
+      shell: ". /opt/gpio-web-console/.nvm/nvm.sh && nvm install {{node_version}}"
       become: true
       become_user: gpio-web-console
       args:
         creates: "/opt/gpio-web-console/.nvm/versions/node"
         chdir: /opt/gpio-web-console
         executable: /bin/bash
+
+    - name: Set cap_dac_override+ep on node
+      community.general.capabilities:
+        path: "/opt/gpio-web-console/.nvm/versions/node/v{{node_version}}/bin/node"
+        capability: cap_dac_override+ep
+        state: present
 
     - name: Copy systemd service file to server
       copy:
@@ -53,6 +62,14 @@
         group: root
       notify:
         - Restart gpio-web-console
+
+    - name: Spread node version in service file
+      community.general.ini_file:
+        path: /etc/systemd/system/gpio-web-console.service
+        section: Service
+        option: ExecStart
+        value: "/opt/gpio-web-console/.nvm/versions/node/v{{node_version}}/bin/npm start -- config.json"
+        state: present
 
     - name: query latest release from GitHub
       ansible.builtin.uri:                                                               
