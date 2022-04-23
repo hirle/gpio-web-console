@@ -3,7 +3,7 @@
 
 # GPIO web console
 
-Ease the control gpio pins through a web application
+Take the control gpio pins through a web application and/or an API
 
 ![Screenshot](demo/screenshot.png)
 
@@ -46,9 +46,9 @@ At `installs/files/config.json` adapt your config file:
   }
 ```
 
-### Install
+### Adapt
 
-With you `installs/files/config.json` 
+With your config file `installs/files/config.json` 
 - adapt the `inventory/hosts` file
 - run `ansible-playbook installs/gpio-web-console.yml`
 
