@@ -54,22 +54,14 @@
         capability: cap_dac_override+ep
         state: present
 
-    - name: Copy systemd service file to server
-      copy:
-        src: gpio-web-console.service
-        dest: /etc/systemd/system
+    - name: Spread node version in service file
+      ansible.builtin.template:
+        src: gpio-web-console.service.j2
+        dest: /etc/systemd/system/gpio-web-console.service
         owner: root
         group: root
       notify:
         - Restart gpio-web-console
-
-    - name: Spread node version in service file
-      community.general.ini_file:
-        path: /etc/systemd/system/gpio-web-console.service
-        section: Service
-        option: ExecStart
-        value: "/opt/gpio-web-console/.nvm/versions/node/v{{node_version}}/bin/npm start -- config.json"
-        state: present
 
     - name: query latest release from GitHub
       ansible.builtin.uri:                                                               
@@ -94,15 +86,6 @@
       npm:
         path: /opt/gpio-web-console
         unsafe_perm: true
-
-    - name: declare service gpio-web-console
-      copy:
-        src: gpio-web-console.service
-        dest: /etc/systemd/system
-        owner: root
-        group: root
-      notify:
-        - Restart gpio-web-console
 
     - name: Enable service gpio-web-console
       ansible.builtin.service:

@@ -3,7 +3,7 @@ Description=gpio-web-console
 After=network.target
 
 [Service]
-ExecStart=(value replaced by ansible)
+ExecStart=/opt/gpio-web-console/.nvm/versions/node/v{{node_version}}/bin/node index.js config.json
 WorkingDirectory=/opt/gpio-web-console
 StandardOutput=inherit
 StandardError=inherit
