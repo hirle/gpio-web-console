@@ -1,0 +1,29 @@
+{
+  "port": 3040,
+  "gpio": [
+    {
+      "pin": 21,
+      "id": "freebox",
+      "name": "Freebox",
+      "mode": "PULSE"
+    },
+    {
+      "pin": 20,
+      "id": "tm",
+      "name": "Time Machine",
+      "mode": "TWOSTATES"
+    },
+    {
+      "pin": 26,
+      "id": "cour",
+      "name": "Caméra cour",
+      "mode": "TWOSTATES"
+    },
+    {
+      "pin": 16,
+      "id": "notused",
+      "name": "(Not used)",
+      "mode": "NOTWIRED"
+    }
+  ]
+}

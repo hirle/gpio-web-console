@@ -13,7 +13,7 @@ A ansible playbook is available, see the directory ansible.
 
 ### Prepare a config file
 
-At `installs/files/config.json` adapt your config file:
+Copy the file `config.template.json` at `installs/files/config.json` and adapt it to your needs:
 ```javascript
 {
     "port": 3040,
@@ -48,7 +48,7 @@ At `installs/files/config.json` adapt your config file:
 
 ### Adapt
 
-With your config file `installs/files/config.json` 
+Once your config file at `installs/files/config.json` ready:
 - adapt the `inventory/hosts` file
 - run `ansible-playbook installs/gpio-web-console.yml`
 

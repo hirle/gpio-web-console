@@ -3,6 +3,9 @@
   hosts: gpio.web.console
   become: yes
 
+  vars:
+    node_version: 16.14.2
+
   tasks:
     - name: create gpio-web-console group
       group:
@@ -37,7 +40,7 @@
         creates: /opt/gpio-web-console/.nvm/nvm.sh
 
     - name: Install Node.js
-      shell: '. /opt/gpio-web-console/.nvm/nvm.sh && nvm install 16.14.2'
+      shell: ". /opt/gpio-web-console/.nvm/nvm.sh && nvm install {{node_version}}"
       become: true
       become_user: gpio-web-console
       args:
@@ -45,10 +48,16 @@
         chdir: /opt/gpio-web-console
         executable: /bin/bash
 
-    - name: Copy systemd service file to server
-      copy:
-        src: gpio-web-console.service
-        dest: /etc/systemd/system
+    - name: Set cap_dac_override+ep on node
+      community.general.capabilities:
+        path: "/opt/gpio-web-console/.nvm/versions/node/v{{node_version}}/bin/node"
+        capability: cap_dac_override+ep
+        state: present
+
+    - name: Spread node version in service file
+      ansible.builtin.template:
+        src: gpio-web-console.service.j2
+        dest: /etc/systemd/system/gpio-web-console.service
         owner: root
         group: root
       notify:
@@ -77,15 +86,6 @@
       npm:
         path: /opt/gpio-web-console
         unsafe_perm: true
-
-    - name: declare service gpio-web-console
-      copy:
-        src: gpio-web-console.service
-        dest: /etc/systemd/system
-        owner: root
-        group: root
-      notify:
-        - Restart gpio-web-console
 
     - name: Enable service gpio-web-console
       ansible.builtin.service:
